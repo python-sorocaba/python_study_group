@@ -12,8 +12,22 @@ True
 >>> card = hit(deck)  # Test hit
 >>> len(deck) == 51
 True
+>>> fake_deck = create_deck()   # Test hit 2
+>>> card1, card2, card3 = hit(deck), hit(deck), hit(deck)
+>>> hand = [card1, card2, card3]
+>>> is_str = [isinstance(card, str) for card in hand]
+>>> all(is_str)
+True
+>>> in_fake_deck = [True for card in hand if card in fake_deck]
+>>> all(in_fake_deck)
+True
+>>> not_in_deck = [True for card in hand if card not in deck]
+>>> all(not_in_deck)
+True
 """
 import random
+from random import shuffle
+# from random import shuffle as shuffle_deck
 
 
 def create_deck():
@@ -29,18 +43,13 @@ def create_deck():
             deck.append("{}{}".format(number, suit))
     return deck
 
-
-def shuffle(deck):
-    """This function shuffle one deck"""
-    random.shuffle(deck)
-
-
 def hit(deck):
     card = random.choice(deck)
-    deck.remove(card)    
+    deck.remove(card)
     return card
 
 if __name__ == "__main__":
     deck = create_deck()
     shuffle(deck)
     hit(deck)
+

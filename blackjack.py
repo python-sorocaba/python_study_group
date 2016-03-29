@@ -9,6 +9,9 @@ Doctest do baralho
 >>> shuffle(deck)
 >>> deck[0:10] != ten_firsts
 True
+>>> card = hit(deck)  # Test hit
+>>> len(deck) == 51
+True
 """
 import random
 
@@ -29,10 +32,15 @@ def create_deck():
 
 def shuffle(deck):
     """This function shuffle one deck"""
-    deck = random.shuffle(deck)
+    random.shuffle(deck)
 
+
+def hit(deck):
+    card = random.choice(deck)
+    deck.remove(card)    
+    return card
 
 if __name__ == "__main__":
     deck = create_deck()
     shuffle(deck)
-    print(deck)
+    hit(deck)

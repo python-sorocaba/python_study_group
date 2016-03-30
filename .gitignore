@@ -1,0 +1,6 @@
+# Ignore my virtuenv
+.venv
+
+# Ignore python-version from pyenv
+.python-version
+

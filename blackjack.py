@@ -16,9 +16,13 @@ True
 >>> card1, card2, card3 = hit(deck), hit(deck), hit(deck)
 >>> hand = [card1, card2, card3]
 >>> is_str = [isinstance(card, str) for card in hand]
+>>> is_str == [True, True, True]
+True
 >>> all(is_str)
 True
 >>> in_fake_deck = [True for card in hand if card in fake_deck]
+>>> in_fake_deck == [True, True, True]
+True
 >>> all(in_fake_deck)
 True
 >>> not_in_deck = [True for card in hand if card not in deck]
@@ -43,6 +47,7 @@ def create_deck():
             deck.append("{}{}".format(number, suit))
     return deck
 
+
 def hit(deck):
     card = random.choice(deck)
     deck.remove(card)
@@ -51,5 +56,7 @@ def hit(deck):
 if __name__ == "__main__":
     deck = create_deck()
     shuffle(deck)
-    hit(deck)
-
+    print(deck)
+    card = hit(deck)
+    print(card)
+    print("*"*20)

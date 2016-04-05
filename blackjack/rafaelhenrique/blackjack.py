@@ -29,13 +29,21 @@ True
 >>> all(not_in_deck)
 True
 >>> hand = ["A♣", "2♣", "3♣"]
->>> show_hand(hand)
+>>> show_hand(hand)  # Test show_hand
 3 cards: A♣, 2♣, 3♣
 >>> hand = ["A♣"]
->>> show_hand(hand)
+>>> show_hand(hand)  # Test show_hand 2
 1 card: A♣
+>>> show_points(hand)  # Test show_points
+1
+>>> hand = ["A♣", "2♣", "3♣"]
+>>> show_points(hand)  # Test show_points 2
+6
+>>> hand = ["J♣", "K♣", "3♣"]
+>>> show_points(hand)  # Test show_points 3
+23
 """
-import random
+import re
 from random import shuffle
 # from random import shuffle as shuffle_deck
 
@@ -68,10 +76,29 @@ def show_hand(hand):
     cards = separator.join(hand)
     print(msg.format(qty_cards, cards))
 
+
+def show_points(hand):
+    points = 0
+    for card in hand:
+        pattern = re.compile("[2-9]")
+        match = pattern.match(card)
+
+        if card.find("A") == 0:
+            points += 1
+        elif match:
+            number = int(match.group(0))
+            points += number
+        elif re.search("[K,J,Q]", card):
+            points += 10
+
+    return points
+
 if __name__ == "__main__":
     deck = create_deck()
     shuffle(deck)
     print(deck)
-    hand = [hit(deck) for _ in range(2)]
+    hand = [hit(deck) for _ in range(3)]
     show_hand(hand)
+    points = show_points(hand)
+    print("Points: {}".format(points))
     print("*"*20)

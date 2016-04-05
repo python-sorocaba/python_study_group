@@ -45,7 +45,6 @@ True
 """
 import re
 from random import shuffle
-# from random import shuffle as shuffle_deck
 
 
 def create_deck():
@@ -63,10 +62,15 @@ def create_deck():
 
 
 def hit(deck):
+    """
+    This function get one card of an deck and
+    remove this card from original deck
+    """
     return deck.pop(0)
 
 
 def show_hand(hand):
+    """Show all cards on hand"""
     qty_cards = len(hand)
     if qty_cards >= 2:
         msg = "{} cards: {}"
@@ -78,6 +82,7 @@ def show_hand(hand):
 
 
 def show_points(hand):
+    """Calculate and return points from actual hand"""
     points = 0
     for card in hand:
         pattern = re.compile("[2-9]")

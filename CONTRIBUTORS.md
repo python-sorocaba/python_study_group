@@ -1,0 +1,5 @@
+Rafael Henrique da Silva Correia (rafaelhenrique)
+Thiago Lopes (ThiagoLopes)
+Elton Andrade Rodrigues (EltonARodrigues)
+Felipe Santos (felipesant0s)
+Vinicius Celms (vinicelms)

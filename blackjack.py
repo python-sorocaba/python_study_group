@@ -28,6 +28,12 @@ True
 >>> not_in_deck = [True for card in hand if card not in deck]
 >>> all(not_in_deck)
 True
+>>> hand = ["A♣", "2♣", "3♣"]
+>>> show_hand(hand)
+3 cards: A♣, 2♣, 3♣
+>>> hand = ["A♣"]
+>>> show_hand(hand)
+1 card: A♣
 """
 import random
 from random import shuffle
@@ -49,14 +55,23 @@ def create_deck():
 
 
 def hit(deck):
-    card = random.choice(deck)
-    deck.remove(card)
-    return card
+    return deck.pop(0)
+
+
+def show_hand(hand):
+    qty_cards = len(hand)
+    if qty_cards >= 2:
+        msg = "{} cards: {}"
+    else:
+        msg = "{} card: {}"
+    separator = ", "
+    cards = separator.join(hand)
+    print(msg.format(qty_cards, cards))
 
 if __name__ == "__main__":
     deck = create_deck()
     shuffle(deck)
     print(deck)
-    card = hit(deck)
-    print(card)
+    hand = [hit(deck) for _ in range(2)]
+    show_hand(hand)
     print("*"*20)

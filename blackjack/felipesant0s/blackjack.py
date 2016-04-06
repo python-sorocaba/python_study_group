@@ -124,7 +124,6 @@ if __name__ == "__main__":
    my_points = show_points(my_cards)
    computer_points = show_points(computer_cards)
    os.system('cls' if os.name == 'nt' else 'clear')
-<<<<<<< HEAD
    
    if my_points > 21:
         print("-----------------------") 
@@ -147,8 +146,6 @@ if __name__ == "__main__":
         print("TIED THE GAME")
         print("-----------------------\n")
   
-=======
->>>>>>> 3ea7f6b754a32434aeebe330db117e357c15078a
    print("\n")
    print("Your Points: {}".format(my_points), " -> {}".format(my_cards),("\n"))
    print("Computer Points: {}".format(computer_points), " -> {}".format(computer_cards),("\n"))

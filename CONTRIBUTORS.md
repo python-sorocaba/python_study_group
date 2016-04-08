@@ -3,3 +3,4 @@
 * Elton Andrade Rodrigues (EltonARodrigues)
 * Felipe Santos (felipesant0s)
 * Vinicius Celms (vinicelms)
+* Luiz Felipe Jardim (luizjardim)

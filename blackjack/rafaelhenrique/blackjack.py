@@ -35,15 +35,18 @@ True
 >>> show_hand(hand)  # Test show_hand 2
 1 card: A♣
 >>> show_points(hand)  # Test show_points
-1
+Points: 1
 >>> hand = ["A♣", "2♣", "3♣"]
 >>> show_points(hand)  # Test show_points 2
-6
+Points: 6
 >>> hand = ["J♣", "K♣", "3♣"]
 >>> show_points(hand)  # Test show_points 3
-23
+Points: 23
+>>> show_money()  # Test show_money
+Money: R$ 2000.00
 """
 import re
+from decimal import Decimal
 from random import shuffle
 
 
@@ -95,15 +98,20 @@ def show_points(hand):
             points += number
         elif re.search("[K,J,Q]", card):
             points += 10
+    print("Points: {}".format(points))
 
-    return points
+
+def show_money():
+    print("Money: R$ {:.2f}".format(MONEY))
+
+MONEY = Decimal('2000.0')
+DECK = create_deck()
+HAND = [hit(DECK) for _ in range(3)]
 
 if __name__ == "__main__":
-    deck = create_deck()
-    shuffle(deck)
-    print(deck)
-    hand = [hit(deck) for _ in range(3)]
-    show_hand(hand)
-    points = show_points(hand)
-    print("Points: {}".format(points))
+    shuffle(DECK)
+    print(DECK)
+    show_hand(HAND)
+    show_points(HAND)
+    show_money()
     print("*"*20)

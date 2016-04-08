@@ -44,6 +44,11 @@ Points: 6
 Points: 23
 >>> show_money()  # Test show_money
 Money: R$ 2000.00
+>>> bet(100)  # Test bet
+100
+>>> show_money()
+Money: R$ 1900.00
+>>> # bet(30)  # Test bet raise exception
 """
 import re
 from decimal import Decimal
@@ -104,6 +109,16 @@ def show_points(hand):
 def show_money():
     print("Money: R$ {:.2f}".format(MONEY))
 
+
+def bet(coin):
+    global MONEY
+    if coin not in (1, 5, 25, 100):
+        raise Exception("Invalid coin to bet")
+    if MONEY >= coin:
+        MONEY -= coin
+        return coin
+    return None
+
 MONEY = Decimal('2000.0')
 DECK = create_deck()
 HAND = [hit(DECK) for _ in range(3)]
@@ -113,5 +128,11 @@ if __name__ == "__main__":
     print(DECK)
     show_hand(HAND)
     show_points(HAND)
+    total_bet = [bet(100) for _ in range(4)]
+    print("My coins: {}".format(total_bet))
+    try:
+        bet(30)
+    except Exception as e:
+        print(e)
     show_money()
     print("*"*20)

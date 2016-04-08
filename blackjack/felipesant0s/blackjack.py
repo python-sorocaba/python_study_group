@@ -76,6 +76,38 @@ def show_hand(hand):
     cards = separator.join(hand)
     print (cards)
 
+def bet(balance=None, how_much=None):
+    try:
+        how_much = int(how_much)
+        balance = int(balance)
+
+        if bet_now > 200:
+            raise Exception('how_much', 'Bet Greater than $200')
+
+        if (balance - how_much) < 0:
+            raise Exception('balance', 'balance not enough')
+
+        if not ((how_much % 1 == 0 or
+                 how_much % 5 == 0 or
+                 how_much % 25 == 0 or
+                 how_much % 100 == 0)):
+            return [balance, how_much]
+
+
+        return [balance - how_much, how_much]
+
+    except ValueError:
+        print(
+            "You can just to buy chips of 1, 5, 25 and 100")
+        return [balance, how_much]
+
+    except Exception as ex:
+        tipo, msg = ex.args
+        print("Error {0}: {1}".format(tipo, msg))
+        if tipo == "how_much":
+            return [balance, 0]
+        return [balance, how_much]
+
 
 def show_points(hand):
     """Calculate and return points from actual hand"""
@@ -94,22 +126,55 @@ def show_points(hand):
 
     return points
 
+def header(balance, my_cards, computer_cards, bet_now):
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("Balance:$ {2} | Bet Now: {3}\n".format("{}", "{}", balance, bet_now))
+    print("Your Cards: {}".format(my_cards))
+    print("Computer Cards: {}".format(computer_cards))
+
+def menu_game():
+    msg = ("\n-------------------------------\n\n"
+           "\t1. To bet\n"
+           "\t2. Buy Cards\n"
+           "\t3. Stop\n"
+           "Choose a Option: ")
+    return msg
+
 if __name__ == "__main__":
    deck = create_deck()
    shuffle(deck)
-   my_cards, computer_cards = [hit(deck)],[hit(deck)]
+   my_cards, computer_cards = [],[]
    to_bet = True
+   balance = 2000
+   bet_now = 0
 
    while to_bet:
-       is_ready = input("Do you want to bet? [y/n] ")
+       
+       header(balance, my_cards, computer_cards, bet_now)
+       is_ready = input(menu_game())
 
-       if is_ready in ("y", "Y"):
+       if is_ready in ("1"):
+
+           your_money = int(input("How Much You Want To Bet?\n"))
+           os.system('cls' if os.name == 'nt' else 'clear')
+           balace_ = balance
+           how_much = your_money
+           bet_now += how_much
+           balance -= your_money
+           
+           if your_money > 200:
+                print("Bet Greater than $200")
+                balance = balace_
+                bet_now -= how_much
+                input("\n!!Press Enter To Return to Game!!")
+   
+       elif is_ready in ("2"):
            to_bet = True
-       elif is_ready in ("n", "N"):
+       elif is_ready in ("3"):
            to_bet = False
            continue
        else:
-           print("Y or N")
+           print("1 , 2 or 3")
            continue
         
        os.system('cls' if os.name == 'nt' else 'clear')

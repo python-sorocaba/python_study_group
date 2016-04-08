@@ -93,8 +93,6 @@ def bet(balance=None, how_much=None):
                  how_much % 100 == 0)):
             return [balance, how_much]
 
-        #if dobrada:
-        #    return [balance - (how_much*2), how_much*2]
 
         return [balance - how_much, how_much]
 
@@ -133,7 +131,6 @@ def header(balance, my_cards, computer_cards, bet_now):
     print("Balance:$ {2} | Bet Now: {3}\n".format("{}", "{}", balance, bet_now))
     print("Your Cards: {}".format(my_cards))
     print("Computer Cards: {}".format(computer_cards))
-   # print("{0}-~-~-~-~-{1}\n".format("-~"*20, "-~"*20))
 
 def menu_game():
     msg = ("\n-------------------------------\n\n"

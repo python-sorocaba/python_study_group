@@ -81,8 +81,8 @@ def bet(balance=None, how_much=None):
         how_much = int(how_much)
         balance = int(balance)
 
-        if how_much > 200:
-            raise Exception('how_much', 'A how_much máxima é de 200 por turno')
+        if bet_now > 200:
+            raise Exception('how_much', 'Bet Greater than $200')
 
         if (balance - how_much) < 0:
             raise Exception('balance', 'balance insuficiente')

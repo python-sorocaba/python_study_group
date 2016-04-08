@@ -85,7 +85,7 @@ def bet(balance=None, how_much=None):
             raise Exception('how_much', 'Bet Greater than $200')
 
         if (balance - how_much) < 0:
-            raise Exception('balance', 'balance insuficiente')
+            raise Exception('balance', 'balance not enough')
 
         if not ((how_much % 1 == 0 or
                  how_much % 5 == 0 or

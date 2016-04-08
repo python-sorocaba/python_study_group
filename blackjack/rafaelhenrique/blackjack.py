@@ -49,6 +49,7 @@ Money: R$ 2000.00
 >>> show_money()
 Money: R$ 1900.00
 >>> # bet(30)  # Test bet raise exception
+>>> # surrender()  # Test surrender raise
 """
 import re
 from decimal import Decimal
@@ -119,12 +120,18 @@ def bet(coin):
         return coin
     return None
 
+
+def surrender():
+    print("Finish with...")
+    show_points(HAND)
+    raise SystemExit
+
 MONEY = Decimal('2000.0')
 DECK = create_deck()
+shuffle(DECK)
 HAND = [hit(DECK) for _ in range(3)]
 
 if __name__ == "__main__":
-    shuffle(DECK)
     print(DECK)
     show_hand(HAND)
     show_points(HAND)
@@ -136,3 +143,7 @@ if __name__ == "__main__":
         print(e)
     show_money()
     print("*"*20)
+    # Add one more card on hand to verify
+    # how surrender function works
+    HAND.append(hit(DECK))
+    surrender()

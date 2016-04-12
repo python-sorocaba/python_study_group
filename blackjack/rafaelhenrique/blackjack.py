@@ -51,7 +51,6 @@ Money: R$ 1900.00
 >>> # bet(30)  # Test bet raise exception
 >>> # surrender()  # Test surrender raise
 """
-import re
 from decimal import Decimal
 from random import shuffle
 
@@ -94,16 +93,18 @@ def show_points(hand):
     """Calculate and return points from actual hand"""
     points = 0
     for card in hand:
-        pattern = re.compile("[2-9]")
-        match = pattern.match(card)
+        # solution with regex:
+        # pattern = re.compile("\d+")
+        # match = pattern.match(card)
+        number = card[:-1]
 
-        if card.find("A") == 0:
+        if number == "A":
             points += 1
-        elif match:
-            number = int(match.group(0))
-            points += number
-        elif re.search("[K,J,Q]", card):
+        elif number in ("K", "J", "Q"):
             points += 10
+        else:
+            number = int(number)
+            points += number
     print("Points: {}".format(points))
 
 

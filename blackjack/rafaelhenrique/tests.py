@@ -4,13 +4,16 @@ import unittest
 
 class TestBlackjack(unittest.TestCase):
     def setUp(self):
-        pass
+        print("Execute setUp")
 
-    def test_problem(self):
+    def test_error(self):
         self.assertEqual(True, False)
 
+    def test_success(self):
+        self.assertEqual(True, True)
+
     def tearDown(self):
-        pass
+        print("Execute tearDown")
 
 if __name__ == '__main__':
     unittest.main()

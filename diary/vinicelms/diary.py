@@ -1,5 +1,6 @@
 import os
 import time
+import datetime
 import sqlite3
 
 def clear_screen():
@@ -17,7 +18,8 @@ class diary():
         fields = []
         db = database().get_connection()
         for row in db.execute("SELECT field_name FROM field"):
-            fields.append(row)
+            for item in row:
+                fields.append(item)
         db.close()
 
         return fields
@@ -34,8 +36,41 @@ class diary():
 
     def get_id_field(self, field):
         db = database().get_connection()
-        db.execute("SELECT id_field FROM field WHERE field_name = ?", (field,))
+        id_field = db.execute("SELECT id_field FROM field WHERE field_name = ?", (field,))
+        for row in id_field:
+            for item in row:
+                id_field = item
         db.close()
+        return id_field
+
+    def add_event(self, date, dict_field_values):
+        db = database().get_connection()
+        id_event_reg = self.register_event(date)
+        for field_values in dict_field_values:
+            print("{}: {}".format(field_values, dict_field_values[field_values]))
+            id_field = self.get_id_field(field_values)
+            db.execute("INSERT INTO event (id_event_reg, id_field, value_field) VALUES (?, ?, ?)", 
+                (id_event_reg, id_field, dict_field_values[field_values],))
+        db.commit()
+        db.close()
+
+    def register_event(self, date):
+        db = database().get_connection()
+        db.execute("INSERT INTO event_register (date_event) VALUES (?)", (date,))
+        db.commit()
+        id_event_reg = db.execute("SELECT id_event_reg FROM event_register WHERE date_event = ?", (date,))
+        for row in id_event_reg:
+            for item in row:
+                id_event_reg = item
+        db.close()
+        return id_event_reg
+
+    def get_list_event_register(self):
+        pass
+
+    def get_list_event(self):
+        pass
+
 
 class database():
     
@@ -96,11 +131,53 @@ if __name__ == "__main__":
             db.close()
             break
 
-    fields = diary().get_list_field()
+    if len(diary().get_list_field()) == 0:
+        add_field()
 
-    if len(fields) == 0:
+    while(True):
+        clear_screen()
+
         message = """
-            Esta é a primeira vez que a aplicação está sendo executada. Favor informar os campos desejados.
+            *********************************************************
+            *                                                       *
+            *                      Bem-Vindo!                       *
+            *                 O que deseja fazer?                   *
+            *                                                       *
+            *     1 - Analisar compromissos                         *
+            *     2 - Adicionar compromissos                        *
+            *     3 - Adicionar campos                              *
+            *     4 - Sair                                          *
+            *                                                       *
+            *********************************************************
+        """
+
+        print(message)
+
+        op = input("Digite a opção desejada: ")
+
+        if op == "1":
+            pass
+        elif op == "2":
+            print("\nAdicionar compromisso:")
+            fields = diary().get_list_field()
+
+            field_value = {}
+            for field in fields:
+                value = input("{}{} do evento: ".format(field[0:1].upper(), field[1:]))
+                field_value[field] = value
+            
+            date = time.strftime("%Y-%m-%d %H:%M:%S")
+            diary().add_event(date, field_value)
+
+            print(field_value)
+        elif op == "3":
+            add_field()
+        elif op == "4":
+            exit(0)
+
+    def add_field():
+        message = """
+            Favor informar os campos desejados.
 
             Ao deixar um campo vazio a inclusão será finalizada.
         """
@@ -149,28 +226,4 @@ if __name__ == "__main__":
                 fields.append(field)
         
         for field in fields:
-            diary().add_field(field)
-
-    while(True):
-
-        clear_screen()
-
-        message = """
-            *********************************************************
-            *                                                       *
-            *                      Bem-Vindo!                       *
-            *                 O que deseja fazer?                   *
-            *                                                       *
-            *     1 - Analisar compromissos                         *
-            *     2 - Adicionar compromissos                        *
-            *     3 - Sair                                          *
-            *                                                       *
-            *********************************************************
-        """
-
-        print(message)
-
-        op = input("Digite a opção desejada: ")
-
-        if op == "1":
-            fields = diary().get_list_field()
+            diary().add_field(field.lower())

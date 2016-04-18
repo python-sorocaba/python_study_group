@@ -1,6 +1,4 @@
 import os
-import time
-import datetime
 import sqlite3
 
 def clear_screen():
@@ -75,7 +73,7 @@ class diary():
 class database():
     
     def __init__(self):
-        self.database_file = '/home/vinicius/Desktop/diary.db'
+        self.database_file = 'diary.db'
 
     def get_connection(self):
         """Verify existence of database_file"""

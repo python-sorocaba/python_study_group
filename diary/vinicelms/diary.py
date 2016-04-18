@@ -7,6 +7,59 @@ def clear_screen():
     else:
         os.system('clear')
 
+def add_field():
+    message = """
+        Favor informar os campos desejados.
+
+        Ao deixar um campo vazio a inclusão será finalizada.
+    """
+    print(message)
+
+    get_user_fields = True
+    fields = []
+    while get_user_fields:
+        field = input("Informe um novo campo: ")
+        if not field:
+            if len(fields) > 1:
+                print("\nForam digitados {} campos. Deseja informar mais campos?".format(len(fields)))
+            else:
+                print("\nFoi digitado {} campo. Deseja informar mais campos?".format(len(fields)))
+
+            for i, field in enumerate(fields):
+                print("Campo {}: {}".format(i+1, field))
+
+            confirm = None
+
+            while(True):
+
+                if not confirm:
+                    confirm = input("\n[M = Mais campos] | [C = Continuar com a execução] | [R = Remover campo]: ")
+                elif confirm.upper() == "M":
+                    confirm = None
+                    break
+                elif confirm.upper() == "C":
+                    get_user_fields = False
+                    break
+                elif confirm.upper() == "R":
+                    try:
+                        field_remove = input("\nInforme o número do campo que deseja remover | [S = Sair]: ")
+                        if field_remove.upper() != "S":
+                            field_remove = int(field_remove)-1
+                            fields.remove(fields[field_remove])
+                        else:
+                            confirm = None
+                    except Exception as e:
+                        print('\n\n>>>>>>>>>> Digite apenas números válidos! <<<<<<<<<<')
+                else:
+                    print('\n\n>>>>>>>>>> Digite uma das informações disponíveis acima <<<<<<<<<<')
+                    confirm = None
+
+        else:
+            fields.append(field)
+    
+    for field in fields:
+        diary().add_field(field.lower())
+
 class diary():
 
     def __init__(self):
@@ -172,56 +225,3 @@ if __name__ == "__main__":
             add_field()
         elif op == "4":
             exit(0)
-
-    def add_field():
-        message = """
-            Favor informar os campos desejados.
-
-            Ao deixar um campo vazio a inclusão será finalizada.
-        """
-        print(message)
-
-        get_user_fields = True
-        fields = []
-        while get_user_fields:
-            field = input("Informe um novo campo: ")
-            if not field:
-                if len(fields) > 1:
-                    print("\nForam digitados {} campos. Deseja informar mais campos?".format(len(fields)))
-                else:
-                    print("\nFoi digitado {} campo. Deseja informar mais campos?".format(len(fields)))
-
-                for i, field in enumerate(fields):
-                    print("Campo {}: {}".format(i+1, field))
-
-                confirm = None
-
-                while(True):
-
-                    if not confirm:
-                        confirm = input("\n[M = Mais campos] | [C = Continuar com a execução] | [R = Remover campo]: ")
-                    elif confirm.upper() == "M":
-                        confirm = None
-                        break
-                    elif confirm.upper() == "C":
-                        get_user_fields = False
-                        break
-                    elif confirm.upper() == "R":
-                        try:
-                            field_remove = input("\nInforme o número do campo que deseja remover | [S = Sair]: ")
-                            if field_remove.upper() != "S":
-                                field_remove = int(field_remove)-1
-                                fields.remove(fields[field_remove])
-                            else:
-                                confirm = None
-                        except Exception as e:
-                            print('\n\n>>>>>>>>>> Digite apenas números válidos! <<<<<<<<<<')
-                    else:
-                        print('\n\n>>>>>>>>>> Digite uma das informações disponíveis acima <<<<<<<<<<')
-                        confirm = None
-
-            else:
-                fields.append(field)
-        
-        for field in fields:
-            diary().add_field(field.lower())

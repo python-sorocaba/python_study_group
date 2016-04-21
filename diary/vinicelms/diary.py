@@ -1,11 +1,14 @@
 import os
+import time
 import sqlite3
+from terminaltables import AsciiTable
 
 def clear_screen():
     if os.name == 'nt':
         os.system('cls')
     else:
         os.system('clear')
+
 
 def add_field():
     message = """
@@ -60,6 +63,7 @@ def add_field():
     for field in fields:
         diary().add_field(field.lower())
 
+
 class diary():
 
     def __init__(self):
@@ -68,7 +72,7 @@ class diary():
     def get_list_field(self):
         fields = []
         db = database().get_connection()
-        for row in db.execute("SELECT field_name FROM field"):
+        for row in db.execute("SELECT field_name FROM field ORDER BY id_field"):
             for item in row:
                 fields.append(item)
         db.close()
@@ -98,7 +102,6 @@ class diary():
         db = database().get_connection()
         id_event_reg = self.register_event(date)
         for field_values in dict_field_values:
-            print("{}: {}".format(field_values, dict_field_values[field_values]))
             id_field = self.get_id_field(field_values)
             db.execute("INSERT INTO event (id_event_reg, id_field, value_field) VALUES (?, ?, ?)", 
                 (id_event_reg, id_field, dict_field_values[field_values],))
@@ -117,10 +120,24 @@ class diary():
         return id_event_reg
 
     def get_list_event_register(self):
-        pass
+        db = database().get_connection()
+        event_register = db.execute("""
+            SELECT id_event_reg, STRFTIME("%d/%m/%Y %H:%M", date_event) as date_event FROM event_register
+        """)
+        return event_register
 
-    def get_list_event(self):
-        pass
+    def get_event(self, id_event_register):
+        db = database().get_connection()
+        event = db.execute("""
+            SELECT
+                ev.value_field as Event
+            FROM event ev
+            LEFT JOIN event_register AS ev_reg ON ev_reg.id_event_reg = ev.id_event_reg
+            LEFT JOIN field AS f ON f.id_field = ev.id_field
+            WHERE ev.id_event_reg = ?
+            ORDER BY f.id_field
+        """, (id_event_register,))
+        return event
 
 
 class database():
@@ -128,6 +145,7 @@ class database():
     def __init__(self):
         self.database_file = 'diary.db'
 
+    
     def get_connection(self):
         """Verify existence of database_file"""
         if not os.path.isfile(self.database_file):
@@ -136,6 +154,7 @@ class database():
             self.conn = sqlite3.connect(self.database_file)
         return self.conn
 
+    
     """Execute when database not exist"""
     def first_execution(self):
         """Create database_file"""
@@ -159,13 +178,14 @@ class database():
                 id_event         INTEGER        PRIMARY KEY        ASC AUTOINCREMENT    NOT NULL,
                 id_event_reg    INTEGER        NOT NULL,
                 id_field        INTEGER        NOT NULL,
-                value_field        INTEGER        NULL,
+                value_field        VARCHAR(120)        NULL,
                 FOREIGN KEY (id_event_reg)    REFERENCES event_register (id_event_reg),
                 FOREIGN KEY (id_field)        REFERENCES field (id_field)
             )"""
         )
 
         self.conn.close()
+
 
 if __name__ == "__main__":
     
@@ -207,7 +227,32 @@ if __name__ == "__main__":
         op = input("Digite a opção desejada: ")
 
         if op == "1":
-            pass
+            fields = diary().get_list_field()
+            events_register = diary().get_list_event_register()
+            
+            table_data = []
+            header = ["ID", "Data de Registro"]
+            
+            for field in fields:
+                header.append("{}{}".format(field[0:1].upper(), field[1:]))
+            table_data.append(header)
+
+            for event_register in events_register:
+                content = []
+                for item in event_register:
+                    content.append(str(item))
+
+                events = diary().get_event(event_register[0])
+
+                for event in events:
+                    for item in event:
+                        content.append(item)
+
+                table_data.append(content)
+
+            table = AsciiTable(table_data, "Compromissos")
+            print("\n\n{}\n\n".format(table.table))
+            input("Pressione qualquer tecla para continuar... ")
         elif op == "2":
             print("\nAdicionar compromisso:")
             fields = diary().get_list_field()
@@ -220,7 +265,7 @@ if __name__ == "__main__":
             date = time.strftime("%Y-%m-%d %H:%M:%S")
             diary().add_event(date, field_value)
 
-            print(field_value)
+            input("Evento adicionado! Pressione qualquer tecla para continuar...")
         elif op == "3":
             add_field()
         elif op == "4":

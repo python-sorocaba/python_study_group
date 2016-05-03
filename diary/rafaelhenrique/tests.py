@@ -34,6 +34,13 @@ class TestDiary(unittest.TestCase):
             my_diary_input.side_effect = task
             return diary.write_task(structure)
 
+    @patch('diary.input')
+    def test_create_structure_basic(self, mock_input):
+        mock_input.return_value = None
+        mock_input.side_effect = ['teste', 'c']
+        diary.create_structure()
+        self.assertTrue(os.path.isfile('structure.json'))
+
     def test_create_structure(self):
         """Test if create_structure generate structure.json file"""
         self.assertTrue(os.path.isfile('structure.json'))

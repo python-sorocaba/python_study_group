@@ -4,6 +4,7 @@ import random
 import sys
 
 def create_deck():
+    '''Create a basic French deck with 52 cards'''
     faces = ["A", "2", "3", "4", "5", "6",
                "7", "8", "9", "10", "Q", "J",
                "K"]
@@ -13,26 +14,31 @@ def create_deck():
 
 
 def initial_round(hand):
+    '''This function initialize the first round in the table'''
     hit_card(deck, hand)
     hit_card(deck, hand)
     return hand
 
 def shuffle_deck(deck):
+    '''This function shuffle the deck at the beginning of round'''
     print('The deck was shuffle')
     return random.shuffle(deck)
 
 
 def hit_card(deck, hand):
+    '''This function hit a card on the top of deck'''
     card_hit = deck.pop(0)
     hand.append(card_hit)
     return card_hit
 
 
 def show_hand(hand):
+    '''Show the cards in hand'''
     return print(hand)
 
 
 def show_points(hand):
+    '''Show the points of hand'''
     points = []
     for point in hand:
         if point[:-1] in 'QJK':
@@ -46,14 +52,19 @@ def show_points(hand):
 
 
 def surrender():
+    '''Finish the program and surrender'''
     return sys.exit()
 
 
 def show_money(money):
+    '''Show the balance of the player'''
     return print("You own R$: {}".format(money))
 
 
 def bet(money):
+    '''
+    This function works to available bet on the game
+    '''
 
     choice = int(input('''Choose an option:
             (1) For bet $ 1
@@ -100,7 +111,31 @@ def bet(money):
 
     return money
 
+def msg_of_win(player, computer, msg):
+    '''
+    This function print a Winner message or a Lose message
+    If the player was the winner or pc was the winner and vice and versa
+    '''
+    print(msg)
+    print("Your points: {}".format(show_points(player)))
+    print("Computer points: {}".format(show_points(computer)))
+    print("This is your hand")
+    show_hand(player)
+    print("This is the computer hand")
+    show_hand(computer)
+    print("See you next time")
+    surrender()
 
+def keep_going(player, computer):
+    '''This function keeps the game playing if
+    the punctuation don't reach or exceed 21 '''
+    print("Keep going")
+    print("Your points: {}".format(show_points(player)))
+    print("Computer points: {}".format(show_points(computer)))
+    print("This is your hand")
+    show_hand(player)
+    print("This is the computer hand")
+    show_hand(computer)
 
 
 if __name__ == "__main__":
@@ -141,59 +176,25 @@ if __name__ == "__main__":
             print('\n')
             hit_card(deck, player_hand)
             hit_card(deck, computer_hand)
+            lose_msg = "You Lose"
+            win_msg = "You win!! Congratulations"
+            lose_pc_msg = "Computer loose. You Win!! Congratulations"
+            win_pc_msg = "Computer Win"
 
             if show_points(player_hand) > 21:
-                print("You Lose")
-                print("Your points: {}".format(show_points(player_hand)))
-                print("Computer points: {}".format(show_points(computer_hand)))
-                print("This is your hand")
-                show_hand(player_hand)
-                print("This is the computer hand")
-                show_hand(computer_hand)
-                print("See you next time")
-                surrender()
+                msg_of_win(player_hand, computer_hand, lose_msg)
 
             elif show_points(player_hand) == 21:
-                print("You win!! Congratulations")
-                print("Your points: {}".format(show_points(player_hand)))
-                print("Computer points: {}".format(show_points(computer_hand)))
-                print("This is your hand")
-                show_hand(player_hand)
-                print("This is the computer hand")
-                show_hand(computer_hand)
-                print("See you next time")
-                surrender()
+                msg_of_win(player_hand, computer_hand, win_msg)
 
             elif show_points(computer_hand) > 21:
-                print("Computer loose. You Win!! Congratulations")
-                print("Your points: {}".format(show_points(player_hand)))
-                print("Computer points: {}".format(show_points(computer_hand)))
-                print("This is your hand")
-                show_hand(player_hand)
-                print("This is the computer hand")
-                show_hand(computer_hand)
-                print("See you next time")
-                surrender()
+                msg_of_win(player_hand, computer_hand, lose_pc_msg)
 
             elif show_points(computer_hand) == 21:
-                print("Computer Win")
-                print("Your points: {}".format(show_points(player_hand)))
-                print("Computer points: {}".format(show_points(computer_hand)))
-                print("This is your hand")
-                show_hand(player_hand)
-                print("This is the computer hand")
-                show_hand(computer_hand)
-                print("See you next time")
-                surrender()
+                msg_of_win(player_hand, computer_hand, win_pc_msg)
 
             else:
-                print("Keep going")
-                print("Your points: {}".format(show_points(player_hand)))
-                print("Computer points: {}".format(show_points(computer_hand)))
-                print("This is your hand")
-                show_hand(player_hand)
-                print("This is the computer hand")
-                show_hand(computer_hand)
+                keep_going(player_hand, computer_hand)
 
         elif choice == 3:
             print('\n')

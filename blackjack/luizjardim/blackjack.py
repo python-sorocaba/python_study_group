@@ -73,34 +73,8 @@ def bet(money):
             (100) For bet $ 100
             Your option here: '''))
 
-    if choice == 1:
-        times = int(input("How many times do you want to bet $ 1 ? \n"))
-        if money < choice*times:
-            print("You don't have balance for this bet. Try again")
-            pass
-
-        money -= choice*times
-
-
-    elif choice == 5:
-        times = int(input("How many times do you want to bet $ 5 ? \n"))
-        if money < choice*times:
-            print("You don't have balance for this bet. Try again")
-            pass
-        money -= choice*times
-
-
-    elif choice == 25:
-        times = int(input("How many times do you want to bet $ 25 ? \n"))
-        if money < choice*times:
-            print("You don't have balance for this bet. Try again")
-            pass
-        money -= choice*times
-
-
-
-    elif choice == 100:
-        times = int(input("How many times do you want to bet $ 100 ? \n"))
+    if choice in (1, 5, 25, 100):
+        times = int(input("How many times do you want to bet $ {0} ? \n".format(choice)))
         if money < choice*times:
             print("You don't have balance for this bet. Try again")
             pass
@@ -167,8 +141,7 @@ if __name__ == "__main__":
 
         if choice == 1:
             print('\n')
-            bet(balance)
-            show_money(balance)
+            show_money(bet(balance))
             show_hand(player_hand)
             print("Your points: {}".format(show_points(player_hand)))
 

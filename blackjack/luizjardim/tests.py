@@ -13,7 +13,7 @@ class TestBlackJack(unittest.TestCase):
              "7", "8", "9", "10", "Q", "J",
              "K"]
         self.suits = ["♣", "♦", "♥", "♠"]
-        self.money = blackjack.show_money()
+        self.money = blackjack.show_money(2000)
 
 
     def test_len_deck(self):

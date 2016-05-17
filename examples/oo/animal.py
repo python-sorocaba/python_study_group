@@ -1,4 +1,4 @@
-class Animal(object):
+class Animal:
     def __init__(self, nome, cor):
         self.nome = nome
         self.cor = cor
@@ -8,12 +8,13 @@ class Animal(object):
 
 
 class Cao(Animal):
+
     def __init__(self, raca, *args, **kwargs):
         super(Cao, self).__init__(*args, **kwargs)
         self.raca = raca
 
     def identificao(self):
-        print("Nome: {} | Cor: {} | Raça {}".format(
+        print("Nome: {} | Cor: {} | Raça: {}".format(
             self.nome, self.cor, self.raca))
 
 

@@ -68,7 +68,7 @@ class Player(object):
         elif isinstance(value, list):
             self._hand += value
         else:
-            raise ValueError('Este valor deve ser uma string ou lista!')
+            raise ValueError('This value should be a string or list!')
 
     def show_hand(self):
         """Show all cards on hand"""

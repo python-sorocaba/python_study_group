@@ -4,9 +4,6 @@ from blackjack_oo import BlackJack, Player
 
 
 class TestBlackjack(unittest.TestCase):
-
-    
-
     def setUp(self): 
 
         self.player = Player()

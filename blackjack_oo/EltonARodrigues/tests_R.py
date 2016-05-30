@@ -2,7 +2,6 @@
 import unittest
 from blackjack_oo import BlackJack, Player
 
-
 class TestPlayer(unittest.TestCase):
     def setUp(self):
         self.player = Player()

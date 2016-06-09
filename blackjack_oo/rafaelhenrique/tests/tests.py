@@ -1,53 +1,6 @@
 # -*- coding: utf-8 -*-
 import unittest
-from blackjack import Blackjack, Player
-
-
-class TestPlayer(unittest.TestCase):
-    def setUp(self):
-        self.player = Player()
-
-    def test_hand_property(self):
-        self.player.hand = "A♣"
-        self.assertEqual(self.player.hand, ["A♣"])
-
-    def test_show_hand_one_card(self):
-        """Test show_hand output with one card"""
-        import sys
-        from io import StringIO
-        self.player.hand = "A♣"
-
-        saved_stdout = sys.stdout
-        try:
-            fake_out = StringIO()
-            sys.stdout = fake_out
-            self.player.show_hand()
-            output = fake_out.getvalue().strip()
-            self.assertEqual(output, '1 card: A♣')
-        finally:
-            sys.stdout = saved_stdout
-
-    def test_show_hand_more_than_two_card(self):
-        """Test show_hand output with more than two cards"""
-        import sys
-        from io import StringIO
-        self.player.hand = ["A♣", "2♣", "3♣"]
-
-        saved_stdout = sys.stdout
-        try:
-            fake_out = StringIO()
-            sys.stdout = fake_out
-            self.player.show_hand()
-            output = fake_out.getvalue().strip()
-            self.assertEqual(output, '3 cards: A♣, 2♣, 3♣')
-        finally:
-            sys.stdout = saved_stdout
-
-    def test_hit_card(self):
-        deck = ["A♣", "2♣", "3♣"]
-        self.player.hit(deck)
-        self.assertEqual(self.player.hand, ["A♣"])
-        self.assertEqual(len(deck), 2)
+from blackjack import Blackjack
 
 
 class TestBlackjack(unittest.TestCase):

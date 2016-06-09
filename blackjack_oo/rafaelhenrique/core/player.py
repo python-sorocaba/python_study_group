@@ -2,7 +2,7 @@
 Doctest for Player
 
 >>> from core.frenchdeck import Card
->>> player = Player("Rafael")
+>>> player = Player("Rafael", 2000.0)
 >>> card = Card('11', 'spades')
 >>> player.hand.append(card)
 >>> player.points
@@ -17,22 +17,27 @@ Doctest for Player
 12
 """
 
+from decimal import Decimal
+
 
 class Hand:
 
-    def __init__(self):
-        self._hand = []
+    def __init__(self, cards=None):
+        if not cards:
+            self._cards = []
+        else:
+            self._cards = cards
 
     def append(self, item):
-        self._hand.append(item)
+        self._cards.append(item)
 
     def __str__(self):
-        cards_quantity = len(self._hand)
+        cards_quantity = len(self._cards)
         if cards_quantity == 0:
             return "You dont have cards on hand!"
         else:
             cards = ["{}{}".format(card.rank, card.suit)
-                     for card in self._hand]
+                     for card in self._cards]
             cards = ",".join(cards)
             if cards_quantity > 1:
                 message = "{} cards: {}".format(cards_quantity, cards)
@@ -41,17 +46,22 @@ class Hand:
         return message
 
     def __getitem__(self, position):
-        return self._hand[position]
+        return self._cards[position]
+
+    def __repr__(self):
+        return "Hand(cards={!r})".format(self._cards)
 
 
 class Player:
 
-    def __init__(self, name):
+    def __init__(self, name, money):
         self.name = name
         self.hand = Hand()
+        self.money = Decimal(money)
 
     def __repr__(self):
-        return "Player(name={!r})".format(self.name)
+        return "Player(name={!r}, money={!r}, hand={!r})".format(
+            self.name, self.money, self.hand)
 
     @property
     def points(self):

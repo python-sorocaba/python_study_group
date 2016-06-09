@@ -6,12 +6,14 @@ from core.frenchdeck import Card
 class TestPlayer(unittest.TestCase):
 
     def setUp(self):
-        self.player = Player('Rafael')
+        self.player = Player('Rafael', 2000.0)
         self.card_one = Card('11', 'spades')
         self.card_two = Card('A', 'spades')
 
     def test_repr(self):
-        self.assertEqual(repr(self.player), "Player(name='Rafael')")
+        expected = ("Player(name='Rafael', money=Decimal('2000'), "
+                    "hand=Hand(cards=[]))")
+        self.assertEqual(repr(self.player), expected)
 
     def test_points(self):
         self.player.hand.append(self.card_one)
@@ -25,3 +27,6 @@ class TestPlayer(unittest.TestCase):
         self.player.hand.append(self.card_one)
         self.player.hand.append(self.card_two)
         self.assertEqual(str(self.player.hand), "2 cards: 11spades,Aspades")
+
+    def test_show_money(self):
+        self.assertEqual(str(self.player.money), "2000")

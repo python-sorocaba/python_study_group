@@ -1,3 +1,5 @@
+# https://en.wikipedia.org/wiki/Fluent_interface
+
 class Poem(object):
     def __init__(self, content):
         self.content = content

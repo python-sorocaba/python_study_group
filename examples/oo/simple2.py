@@ -29,11 +29,16 @@ class Blackjack:
 if __name__ == "__main__":
     mygame = Blackjack()
 
+    # call instance methods
     mygame.show_cards()
     mygame.show_money()
-    mygame.show_cls_money()
     mygame.show_hand()
+    mygame.show_cls_money()
 
-    print("Class atributtes:")
+    # call class method
+    Blackjack.show_cls_money()
+
+    # class attributes
     print(Blackjack.deck)
     print(Blackjack.money)
+

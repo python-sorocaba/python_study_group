@@ -3,45 +3,6 @@ from decimal import Decimal
 from random import shuffle
 
 
-class Player:
-    def __init__(self, money='2000.0'):
-        self.money = Decimal(money)
-        self._hand = []
-
-    @property
-    def hand(self):
-        return self._hand
-
-    @hand.setter
-    def hand(self, value):
-        if isinstance(value, str):
-            self._hand.append(value)
-        elif isinstance(value, list):
-            self._hand += value
-        else:
-            raise ValueError('Este valor deve ser uma string ou lista!')
-
-    def show_hand(self):
-        """Show all cards on hand"""
-        qty_cards = len(self.hand)
-        if qty_cards >= 2:
-            cards = ", ".join(self.hand)
-            msg = "{} cards: {}".format(qty_cards, cards)
-        elif qty_cards == 1:
-            cards = ", ".join(self.hand)
-            msg = "{} card: {}".format(qty_cards, cards)
-        else:
-            msg = "You dont have cards on hand!"
-        print(msg)
-
-    def hit(self, deck):
-        """
-        This function get one card of an deck and
-        remove this card from original deck
-        """
-        card = deck.pop(0)
-        self.hand = card
-
 
 class Blackjack:
     numbers = ["A", "2", "3", "4", "5", "6",

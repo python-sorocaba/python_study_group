@@ -3,18 +3,18 @@ Doctest for Player
 
 >>> from core.frenchdeck import Card
 >>> player = Player("Rafael", 2000.0)
->>> card = Card('11', 'spades')
+>>> card = Card('Q', 'spades')
 >>> player.hand.append(card)
 >>> player.points
-11
+10
 >>> print(player.hand)
-1 card: 11spades
+1 card: Q spades
 >>> card = Card('A', 'spades')
 >>> player.hand.append(card)
 >>> print(player.hand)
-2 cards: 11spades,Aspades
+2 cards: Q spades,A spades
 >>> player.points
-12
+11
 """
 
 from decimal import Decimal
@@ -36,7 +36,7 @@ class Hand:
         if cards_quantity == 0:
             return "You dont have cards on hand!"
         else:
-            cards = ["{}{}".format(card.rank, card.suit)
+            cards = ["{} {}".format(card.rank, card.suit)
                      for card in self._cards]
             cards = ",".join(cards)
             if cards_quantity > 1:

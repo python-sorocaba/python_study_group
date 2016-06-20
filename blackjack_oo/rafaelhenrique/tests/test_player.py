@@ -39,3 +39,8 @@ class TestPlayer(unittest.TestCase):
     def test_bet_invalid_coin(self):
         with self.assertRaises(ValueError):
             self.player.bet(200)
+
+    def test_len_hand(self):
+        self.player.hand.append(self.card_one)
+        self.player.hand.append(self.card_one)
+        self.assertEqual(len(self.player.hand), 2)

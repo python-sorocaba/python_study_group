@@ -51,6 +51,9 @@ class Hand:
     def __repr__(self):
         return "Hand(cards={!r})".format(self._cards)
 
+    def __len__(self):
+        return len(self._cards)
+
 
 class Player:
 

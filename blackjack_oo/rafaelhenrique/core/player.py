@@ -63,6 +63,14 @@ class Player:
         return "Player(name={!r}, money={!r}, hand={!r})".format(
             self.name, self.money, self.hand)
 
+    def bet(self, coin):
+        if coin not in (1, 5, 25, 100):
+            raise ValueError("Invalid coin to bet")
+        if self.money >= coin:
+            self.money -= coin
+            return coin
+        return None
+
     @property
     def points(self):
         """Calculate and return points from actual hand"""

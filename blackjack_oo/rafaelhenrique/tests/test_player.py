@@ -30,3 +30,12 @@ class TestPlayer(unittest.TestCase):
 
     def test_show_money(self):
         self.assertEqual(str(self.player.money), "2000")
+
+    def test_bet(self):
+        coin = self.player.bet(100)
+        self.assertEqual(self.player.money, 1900.0)
+        self.assertEqual(coin, 100)
+
+    def test_bet_invalid_coin(self):
+        with self.assertRaises(ValueError):
+            self.player.bet(200)

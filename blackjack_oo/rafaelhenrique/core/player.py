@@ -2,22 +2,23 @@
 Doctest for Player
 
 >>> from core.frenchdeck import Card
->>> player = Player("Rafael", 2000.0)
->>> card = Card('11', 'spades')
+>>> player = Player("Rafael", 1999.0)
+>>> card = Card('Q', 'spades')
 >>> player.hand.append(card)
 >>> player.points
-11
+10
 >>> print(player.hand)
-1 card: 11spades
+1 card: Q spades
 >>> card = Card('A', 'spades')
 >>> player.hand.append(card)
 >>> print(player.hand)
-2 cards: 11spades,Aspades
+2 cards: Q spades,A spades
 >>> player.points
-12
+11
 """
 
 from decimal import Decimal
+
 
 class Hand:
     def __init__(self, cards=None):
@@ -60,4 +61,15 @@ class Player:
         card = deck.pop(0)
         self.hand = card
 
-
+    @property
+    def points(self):
+        """Calculate and return points from actual hand"""
+        points = 0
+        for card in self.hand:
+            if card.rank == "A":
+                points += 1
+            elif card.rank in ("K", "J", "Q"):
+                points += 10
+            else:
+                points += int(card.rank)
+        return points

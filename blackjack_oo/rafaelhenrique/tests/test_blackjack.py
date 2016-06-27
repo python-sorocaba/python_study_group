@@ -29,6 +29,6 @@ class TestBlackjack(unittest.TestCase):
 
         expected = (
             'BLACKJACK -> Saldo: 2000 | Aposta Atual: 0 | Seus pontos: 0\n'
-            'Dealer hand -> 3 cards: Q spades,Q diamonds,Q clubs\n'
+            'Dealer hand -> 3 cards: Q spades,Q diamonds,HIDE CARD\n'
             'Player hand -> You dont have cards on hand!\n')
-        self.assertEqual(self.game.header(), expected)
+        self.assertEqual(self.game.header, expected)

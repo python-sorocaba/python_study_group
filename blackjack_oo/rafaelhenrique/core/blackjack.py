@@ -37,6 +37,7 @@ class Blackjack:
             self.dealer.hand.append(card)
         self.started = True
 
+    @property
     def header(self):
         msg = ("BLACKJACK -> Saldo: {} | Aposta Atual: {} | Seus pontos: {}\n"
                "Dealer hand -> {}\n"

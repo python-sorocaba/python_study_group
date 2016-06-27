@@ -36,3 +36,17 @@ class Blackjack:
             card = self.deck.pop(0)
             self.dealer.hand.append(card)
         self.started = True
+
+    def header(self):
+        msg = ("BLACKJACK -> Saldo: {} | Aposta Atual: {} | Seus pontos: {}\n"
+               "Dealer hand -> {}\n"
+               "Player hand -> {}\n")
+
+        dealer_hand = str(self.dealer.hand).split(',')[:-1] + ['HIDE CARD']
+        dealer_hand = ",".join(dealer_hand)
+
+        return msg.format(self.player.money,
+                          self.current_bet,
+                          self.player.points,
+                          dealer_hand,
+                          self.player.hand)

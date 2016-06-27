@@ -2,6 +2,7 @@ import unittest
 from core.player import Player
 from core.frenchdeck import FrenchDeck
 from core.blackjack import Blackjack
+from core.frenchdeck import Card
 
 
 class TestBlackjack(unittest.TestCase):
@@ -20,3 +21,14 @@ class TestBlackjack(unittest.TestCase):
     def test_start(self):
         self.game.start()
         self.assertEqual(len(self.dealer.hand), 2)
+
+    def test_header(self):
+        self.dealer.hand.append(Card('Q', 'spades'))
+        self.dealer.hand.append(Card('Q', 'diamonds'))
+        self.dealer.hand.append(Card('Q', 'clubs'))
+
+        expected = (
+            'BLACKJACK -> Saldo: 2000 | Aposta Atual: 0 | Seus pontos: 0\n'
+            'Dealer hand -> 3 cards: Q spades,Q diamonds,Q clubs\n'
+            'Player hand -> You dont have cards on hand!\n')
+        self.assertEqual(self.game.header(), expected)

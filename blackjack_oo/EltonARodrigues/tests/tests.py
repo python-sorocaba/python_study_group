@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
-from blackjack_oo import BlackJack, Player
+from blackjack import Blackjack, Player
+
 
 class TestPlayer(unittest.TestCase):
     def setUp(self):
@@ -51,7 +52,7 @@ class TestPlayer(unittest.TestCase):
 
 class TestBlackjack(unittest.TestCase):
     def setUp(self):
-        self.blackjack = BlackJack()
+        self.blackjack = Blackjack()
         self.deck = self.blackjack.deck
         self.suits = ["♣", "♦", "♥", "♠"]
         self.numbers = ["A", "2", "3", "4", "5", "6",

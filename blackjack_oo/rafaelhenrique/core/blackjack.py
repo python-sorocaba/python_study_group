@@ -22,10 +22,11 @@ class Blackjack:
         self.player = player
         self.deck = deck
         self.started = False
+        self.current_bet = 0
 
     def __repr__(self):
-        return "Blackjack(dealer={!r}, player={!r})".format(self.dealer.name,
-                                                            self.player.name)
+        return "Blackjack(dealer={!r}, player={!r}, current_bet={!r})".format(
+            self.dealer.name, self.player.name, self.current_bet)
 
     def start(self):
         if self.started:

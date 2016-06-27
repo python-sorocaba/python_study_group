@@ -13,7 +13,8 @@ class TestBlackjack(unittest.TestCase):
         self.game = Blackjack(self.dealer, self.player, self.deck)
 
     def test_repr(self):
-        expected = ("Blackjack(dealer='Dealer', player='Rafael')")
+        expected = (
+            "Blackjack(dealer='Dealer', player='Rafael', current_bet=0)")
         self.assertEqual(repr(self.game), expected)
 
     def test_start(self):

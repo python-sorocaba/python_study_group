@@ -33,6 +33,9 @@ class Blackjack:
         print(cls)
         print("show_cls_money: {}".format(cls.money))
 
+    @staticmethod
+    def say_hello(name):
+        print("Hello {}!".format(name))
 
 if __name__ == "__main__":
     print("mygame: \n")
@@ -61,3 +64,8 @@ if __name__ == "__main__":
 
     mygame3.show_cards()
     mygame3.show_money()
+
+    print("staticmethod:")
+    mygame3.say_hello("Rafael")
+    Blackjack.say_hello("Rafael")
+

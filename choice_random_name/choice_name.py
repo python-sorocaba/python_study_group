@@ -6,7 +6,6 @@ def choice_name(filename):
     with open(filename, 'r', encoding='utf-8') as fp:
         content = fp.read()
         content_list = content.split('\n')
-        content_list.remove('')
 
     # random_birl is a strong random \o/ 
     random_birl = random.SystemRandom()

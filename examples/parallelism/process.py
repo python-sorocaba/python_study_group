@@ -11,9 +11,9 @@ def number():
     print(msg)
 
 
-def slow_function():
-    for i in range(1, 11):
-        print(i)
+def slow_function(number):
+    for i in range(1, 3):
+        print("Im {}: {}".format(number, i))
         sleep(1)
 
 
@@ -29,14 +29,16 @@ def run_parallel_functions(self, *functions):
 
 
 if __name__ == '__main__':
+    # good!
     run_parallel_functions(
         number(),
         number(),
         number(),
     )
 
+    # not so good!
     run_parallel_functions(
-        slow_function(),
-        slow_function(),
-        slow_function(),
+        slow_function(1),
+        slow_function(2),
+        slow_function(3),
     )

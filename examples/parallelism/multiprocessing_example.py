@@ -1,5 +1,5 @@
 import random
-from time import time
+from time import time, sleep
 from multiprocessing import Process
 
 
@@ -9,6 +9,12 @@ def number():
         time(),
     )
     print(msg)
+
+
+def slow_function():
+    for i in range(1, 11):
+        print(i)
+        sleep(1)
 
 
 def run_parallel_functions(self, *functions):
@@ -27,4 +33,10 @@ if __name__ == '__main__':
         number(),
         number(),
         number(),
+    )
+
+    run_parallel_functions(
+        slow_function(),
+        slow_function(),
+        slow_function(),
     )

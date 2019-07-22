@@ -1,0 +1,5 @@
+2019-07-22 10:37:03,874 ERROR exception_function => Exception on handling exception_function with args=() kwargs={}
+Traceback (most recent call last):
+  File "exception_logging.py", line 8, in exception_function
+    1 / 0
+ZeroDivisionError: division by zero
